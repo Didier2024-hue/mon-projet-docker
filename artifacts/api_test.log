@@ -1,0 +1,14 @@
+
+[AUTH TEST] alice → attendu 200, obtenu 200 : SUCCES
+
+[AUTH TEST] bob → attendu 200, obtenu 200 : SUCCES
+
+[AUTH TEST] clementine → attendu 403, obtenu 403 : SUCCES
+[AUTHORIZATION TEST] bob - v1 attendu 200, obtenu 200 : SUCCES
+[AUTHORIZATION TEST] bob - v2 attendu 403, obtenu 403 : SUCCES
+[CONTENT TEST] v1 | 'life is beautiful' → score=0.5994 : SUCCES
+[AUTHORIZATION TEST] alice - v1 attendu 200, obtenu 200 : SUCCES
+[CONTENT TEST] v2 | 'life is beautiful' → score=0.5994 : SUCCES
+[AUTHORIZATION TEST] alice - v2 attendu 200, obtenu 200 : SUCCES
+[CONTENT TEST] v1 | 'that sucks' → score=-0.3612 : SUCCES
+[CONTENT TEST] v2 | 'that sucks' → score=-0.3612 : SUCCES

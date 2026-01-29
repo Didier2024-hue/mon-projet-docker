@@ -1,0 +1,46 @@
+Attaching to api, test_auth, test_authorization, test_content
+api                 | INFO:     172.18.0.3:49326 - "GET /status HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.3:49328 - "GET /permissions?username=alice&password=wonderland HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.3:49340 - "GET /permissions?username=bob&password=builder HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.3:49344 - "GET /permissions?username=clementine&password=mandarine HTTP/1.1" 403 Forbidden
+test_auth           | ==== DEMARRAGE DU TEST D'AUTHENTIFICATION ====
+test_auth           | attente que l'api soit prete...
+test_auth           | api ok !
+test_auth           | Test de connexion pour alice
+test_auth           | 
+test_auth           | [AUTH TEST] alice → attendu 200, obtenu 200 : SUCCES
+test_auth           | 
+test_auth           | Test de connexion pour bob
+test_auth           | 
+test_auth           | [AUTH TEST] bob → attendu 200, obtenu 200 : SUCCES
+test_auth           | 
+test_auth           | Test de connexion pour clementine
+test_auth           | 
+test_auth           | [AUTH TEST] clementine → attendu 403, obtenu 403 : SUCCES
+test_auth           | 
+test_auth           | Tous les tests AUTH sont OK
+api                 | INFO:     172.18.0.5:59302 - "GET /status HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.5:59310 - "GET /v1/sentiment?username=bob&password=builder&sentence=hello+world HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.4:39640 - "GET /status HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.5:59314 - "GET /v2/sentiment?username=bob&password=builder&sentence=hello+world HTTP/1.1" 403 Forbidden
+api                 | INFO:     172.18.0.4:39650 - "GET /v1/sentiment?username=alice&password=wonderland&sentence=life+is+beautiful HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.5:59330 - "GET /v1/sentiment?username=alice&password=wonderland&sentence=hello+world HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.4:39652 - "GET /v2/sentiment?username=alice&password=wonderland&sentence=life+is+beautiful HTTP/1.1" 200 OK
+api                 | INFO:     172.18.0.5:59340 - "GET /v2/sentiment?username=alice&password=wonderland&sentence=hello+world HTTP/1.1" 200 OK
+test_authorization  | attente de l'api...
+test_authorization  | api ok
+test_authorization  | Test bob sur v1
+test_authorization  | [AUTHORIZATION TEST] bob - v1 attendu 200, obtenu 200 : SUCCES
+test_authorization  | 
+test_authorization  | Test bob sur v2
+test_authorization  | [AUTHORIZATION TEST] bob - v2 attendu 403, obtenu 403 : SUCCES
+test_authorization  | 
+test_authorization  | Test alice sur v1
+test_authorization  | [AUTHORIZATION TEST] alice - v1 attendu 200, obtenu 200 : SUCCES
+test_authorization  | 
+test_authorization  | Test alice sur v2
+test_authorization  | [AUTHORIZATION TEST] alice - v2 attendu 200, obtenu 200 : SUCCES
+test_authorization  | 
+test_authorization  | Tous les tests d'autorisation sont OK
+api                 | INFO:     172.18.0.4:39654 - "GET /v1/sentiment?username=alice&password=wonderland&sentence=that+sucks HTTP/1.1" 200 OK
+[Ktest_auth exited with code 0

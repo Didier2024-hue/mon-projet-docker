@@ -1,0 +1,54 @@
+services:
+  api:
+    image: datascientest/fastapi:1.0.0
+    container_name: api
+    ports:
+      - "8000:8000"
+    networks:
+      - ci_net
+
+  test_auth:
+    build: ./tests/auth
+    container_name: test_auth
+    environment:
+      API_ADDRESS: "api"
+      API_PORT: "8000"
+      LOG: "1"
+    volumes:
+      - ./artifacts:/reports
+    depends_on:
+      - api
+    networks:
+      - ci_net
+
+  test_authorization:
+    build: ./tests/authorization
+    container_name: test_authorization
+    environment:
+      API_ADDRESS: "api"
+      API_PORT: "8000"
+      LOG: "1"
+    volumes:
+      - ./artifacts:/reports
+    depends_on:
+      - api
+    networks:
+      - ci_net
+
+  test_content:
+    build: ./tests/content
+    container_name: test_content
+    environment:
+      API_ADDRESS: "api"
+      API_PORT: "8000"
+      LOG: "1"
+    volumes:
+      - ./artifacts:/reports
+    depends_on:
+      - api
+    networks:
+      - ci_net
+
+networks:
+  ci_net:
+    driver: bridge
