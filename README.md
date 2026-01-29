@@ -1,18 +1,8 @@
 📋 Project Overview
 This project implements a complete CI/CD pipeline for testing a sentiment analysis API. The API uses the Docker image datascientest/fastapi:1.0.0 and analyzes the sentiment of English sentences.
 
-API Endpoints
-/status : Checks API status
-
-/permissions : Returns user permissions
-
-/v1/sentiment : Sentiment analysis with an old model
-
-/v2/sentiment : Sentiment analysis with a new model
-
-🏗️ Project Architecture
+🏗️ Project Structure
 text
-linkedin-docker-project/
 ├── docker-compose.yml          # Docker Compose configuration
 ├── setup.sh                    # Installation and launch script
 ├── README.md                   # This file
@@ -54,7 +44,7 @@ Verifies API result accuracy with sentences:
 
 "that sucks" → negative score
 
-🚀 Installation and Execution
+🚀 Quick Start
 Prerequisites
 Docker
 
@@ -62,103 +52,71 @@ Docker Compose
 
 Git
 
-Installation
-Clone the repository:
-
+Installation & Execution
 bash
+# Clone the repository
 git clone [REPO_URL]
 cd linkedin-docker-project
-Give execution permissions to the script:
 
-bash
+# Make script executable
 chmod +x setup.sh
-Run the complete pipeline:
 
-bash
+# Run the complete pipeline
 ./setup.sh
 Manual Execution
-If you want to execute steps manually:
-
-Download the API image:
-
 bash
+# Download API image
 docker image pull datascientest/fastapi:1.0.0
-Build test images:
 
-bash
+# Build and run tests
 docker-compose build
-Start containers:
-
-bash
 docker-compose up
-Clean up the environment:
-
-bash
-docker-compose down
 📊 Expected Results
 After execution, you will get:
 
-api_test.log : Contains detailed logs of all tests
+api_test.log → Contains detailed logs of all tests
 
-log.txt : Log summary
+log.txt → Log summary
 
 Console display of test results
 
 🔧 Configuration
 Environment Variables
-LOG=1 : Enables log writing to api_test.log
-
-API_ADDRESS=fastapi : API service address in Docker network
-
-API_PORT=8000 : API port
-
+Variable	Default	Description
+LOG	1	Enables log writing to api_test.log
+API_ADDRESS	fastapi	API service address
+API_PORT	8000	API port
 Docker Network
-The project uses a Docker network named test_network to enable communication between:
+The project uses a Docker network named test_network to enable communication between containers.
 
-The API container
+🐳 Docker Images
+Image	Purpose
+test-authentication	Authentication tests
+test-authorization	Authorization tests
+test-content	Content validation tests
+📝 Code Examples
+Sample Test Structure
+python
+import os
+import requests
 
-The three test containers
+# API configuration
+api_address = os.getenv('API_ADDRESS', 'fastapi')
+api_port = os.getenv('API_PORT', 8000)
 
-Volumes
-A shared volume is used to:
+# Test execution
+r = requests.get(
+    url=f'http://{api_address}:{api_port}/permissions',
+    params={'username': 'alice', 'password': 'wonderland'}
+)
 
-Share logs between test containers
-
-Persist results after execution
-
-🐳 Custom Docker Images
-Each test uses a specific Docker image:
-
-test-authentication : Authentication tests
-
-test-authorization : Authorization tests
-
-test-content : Content tests
-
-📝 Technical Notes
-Implementation Choices
-Language : Python with requests library for simplicity
-
-Test separation : One container per test type for isolation
-
-Centralized logs : Single file for easier analysis
-
-Docker network : Network isolation for security
-
-Error Handling
-Code 200 : Success
-
-Code 403 : Authentication failure
-
-Positivity/negativity score validation
-
+# Log results
+if os.environ.get('LOG') == '1':
+    with open('/logs/api_test.log', 'a') as file:
+        file.write(f"Status: {r.status_code}\n")
 🧹 Cleanup
-To remove all created containers, images, and volumes:
-
 bash
+# Remove all containers, images, and volumes
 docker-compose down --rmi all --volumes
 📄 License
 This project is created as part of a CI/CD module examination.
-
-👥 Authors
-Project created for CI/CD module validation using Docker pipelines.
